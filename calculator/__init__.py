@@ -169,6 +169,8 @@ class Ui_MainWindow(object):
 
         self.add_functions()
 
+        self.is_equal = False
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Calculator"))
@@ -205,11 +207,19 @@ class Ui_MainWindow(object):
         self.btn_mult.clicked.connect(lambda: self.write_numer(self.btn_mult.text()))
         self.btn_div.clicked.connect(lambda: self.write_numer(self.btn_div.text()))
 
+        self.btn_equal.clicked.connect(self.result)
+
     def write_numer(self, button_text):
-        if self.label_result.text() == '0':
+        if self.label_result.text() == '0' or self.is_equal:
             self.label_result.setText(button_text)
+            self.is_equal = False
         else:
             self.label_result.setText(self.label_result.text() + button_text)
+
+    def result(self):
+        res = eval(self.label_result.text())    #вычисление мат. дейтсвия, представленнго в формате строки
+        self.label_result.setText('Result: ' + str(res))
+        self.is_equal = True
 
 
 
