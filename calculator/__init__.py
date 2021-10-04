@@ -170,6 +170,7 @@ class Ui_MainWindow(object):
         self.add_functions()
 
         self.is_equal = False
+        self.is_action = False
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -192,34 +193,43 @@ class Ui_MainWindow(object):
         self.btn_div.setText(_translate("MainWindow", "/"))
 
     def add_functions(self):
-        self.btn_0.clicked.connect(lambda: self.write_numer(self.btn_0.text()))
-        self.btn_1.clicked.connect(lambda: self.write_numer(self.btn_1.text()))
-        self.btn_2.clicked.connect(lambda: self.write_numer(self.btn_2.text()))
-        self.btn_3.clicked.connect(lambda: self.write_numer(self.btn_3.text()))
-        self.btn_4.clicked.connect(lambda: self.write_numer(self.btn_4.text()))
-        self.btn_5.clicked.connect(lambda: self.write_numer(self.btn_5.text()))
-        self.btn_6.clicked.connect(lambda: self.write_numer(self.btn_6.text()))
-        self.btn_7.clicked.connect(lambda: self.write_numer(self.btn_7.text()))
-        self.btn_8.clicked.connect(lambda: self.write_numer(self.btn_8.text()))
-        self.btn_9.clicked.connect(lambda: self.write_numer(self.btn_9.text()))
-        self.btn_plus.clicked.connect(lambda: self.write_numer(self.btn_plus.text()))
-        self.btn_subtr.clicked.connect(lambda: self.write_numer(self.btn_subtr.text()))
-        self.btn_mult.clicked.connect(lambda: self.write_numer(self.btn_mult.text()))
-        self.btn_div.clicked.connect(lambda: self.write_numer(self.btn_div.text()))
+        self.btn_0.clicked.connect(lambda: self.write_number(self.btn_0.text()))
+        self.btn_1.clicked.connect(lambda: self.write_number(self.btn_1.text()))
+        self.btn_2.clicked.connect(lambda: self.write_number(self.btn_2.text()))
+        self.btn_3.clicked.connect(lambda: self.write_number(self.btn_3.text()))
+        self.btn_4.clicked.connect(lambda: self.write_number(self.btn_4.text()))
+        self.btn_5.clicked.connect(lambda: self.write_number(self.btn_5.text()))
+        self.btn_6.clicked.connect(lambda: self.write_number(self.btn_6.text()))
+        self.btn_7.clicked.connect(lambda: self.write_number(self.btn_7.text()))
+        self.btn_8.clicked.connect(lambda: self.write_number(self.btn_8.text()))
+        self.btn_9.clicked.connect(lambda: self.write_number(self.btn_9.text()))
+
+        self.btn_plus.clicked.connect(lambda: self.write_action(self.btn_plus.text()))
+        self.btn_subtr.clicked.connect(lambda: self.write_action(self.btn_subtr.text()))
+        self.btn_mult.clicked.connect(lambda: self.write_action(self.btn_mult.text()))
+        self.btn_div.clicked.connect(lambda: self.write_action(self.btn_div.text()))
 
         self.btn_equal.clicked.connect(self.result)
 
-    def write_numer(self, button_text):
+    def write_number(self, button_text):
+        self.is_action = False
         if self.label_result.text() == '0' or self.is_equal:
             self.label_result.setText(button_text)
             self.is_equal = False
         else:
             self.label_result.setText(self.label_result.text() + button_text)
 
+    def write_action(self, button_text):
+        if not self.is_action and not self.is_equal:
+            self.label_result.setText(self.label_result.text()+button_text)
+        self.is_action = True
+
+
     def result(self):
-        res = eval(self.label_result.text())    #вычисление мат. дейтсвия, представленнго в формате строки
-        self.label_result.setText('Result: ' + str(res))
-        self.is_equal = True
+        if not self.is_action and not self.is_equal:
+            res = round(eval(self.label_result.text()),4)   #вычисление мат. дейтсвия, представленнго в формате строки
+            self.label_result.setText('Result: ' + str(res))
+            self.is_equal = True
 
 
 
