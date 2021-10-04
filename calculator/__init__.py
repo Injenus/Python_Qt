@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
 
 class Ui_MainWindow(object):
@@ -230,7 +231,27 @@ class Ui_MainWindow(object):
             res = round(eval(self.label_result.text()),4)   #вычисление мат. дейтсвия, представленнго в формате строки
             self.label_result.setText('Result: ' + str(res))
             self.is_equal = True
+        else:
+            error = QMessageBox()
+            error.setWindowTitle('Error')
+            error.setText('You got the result!')
+            error.setIcon(QMessageBox.Warning)
+            error.setStandardButtons(QMessageBox.Reset | QMessageBox.Cancel | QMessageBox.Ok)
 
+            error.setDefaultButton(QMessageBox.Ok)
+            error.setInformativeText('It is impossible to perform this action twice in a row.')
+            error.setDetailedText('To get a new result, you need to enter a new expression.')
+
+            error.buttonClicked.connect(self.popup_action)
+
+            error.exec_()
+
+    def popup_action(self, btn):
+        if btn.text() == 'Ok':
+            print('Ok')
+        elif btn.text() == 'Reset':
+            self.label_result.setText('0')
+            self.is_equal = False
 
 
 if __name__ == "__main__":
