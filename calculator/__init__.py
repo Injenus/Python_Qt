@@ -167,6 +167,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.add_functions()
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Calculator"))
@@ -186,6 +188,29 @@ class Ui_MainWindow(object):
         self.btn_subtr.setText(_translate("MainWindow", "-"))
         self.btn_mult.setText(_translate("MainWindow", "*"))
         self.btn_div.setText(_translate("MainWindow", "/"))
+
+    def add_functions(self):
+        self.btn_0.clicked.connect(lambda: self.write_numer(self.btn_0.text()))
+        self.btn_1.clicked.connect(lambda: self.write_numer(self.btn_1.text()))
+        self.btn_2.clicked.connect(lambda: self.write_numer(self.btn_2.text()))
+        self.btn_3.clicked.connect(lambda: self.write_numer(self.btn_3.text()))
+        self.btn_4.clicked.connect(lambda: self.write_numer(self.btn_4.text()))
+        self.btn_5.clicked.connect(lambda: self.write_numer(self.btn_5.text()))
+        self.btn_6.clicked.connect(lambda: self.write_numer(self.btn_6.text()))
+        self.btn_7.clicked.connect(lambda: self.write_numer(self.btn_7.text()))
+        self.btn_8.clicked.connect(lambda: self.write_numer(self.btn_8.text()))
+        self.btn_9.clicked.connect(lambda: self.write_numer(self.btn_9.text()))
+        self.btn_plus.clicked.connect(lambda: self.write_numer(self.btn_plus.text()))
+        self.btn_subtr.clicked.connect(lambda: self.write_numer(self.btn_subtr.text()))
+        self.btn_mult.clicked.connect(lambda: self.write_numer(self.btn_mult.text()))
+        self.btn_div.clicked.connect(lambda: self.write_numer(self.btn_div.text()))
+
+    def write_numer(self, button_text):
+        if self.label_result.text() == '0':
+            self.label_result.setText(button_text)
+        else:
+            self.label_result.setText(self.label_result.text() + button_text)
+
 
 
 if __name__ == "__main__":
